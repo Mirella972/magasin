@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.tp2.magasin.databinding.FragmentHomeBinding
+import com.tp2.magasin.databinding.FragmentMagasinBinding
 
 class MagasinFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMagasinBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,10 +26,10 @@ class MagasinFragment : Fragment() {
         magasinViewModel =
             ViewModelProvider(requireActivity()).get(MagasinViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
+        val textView: TextView = binding.textMagasin
         magasinViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }

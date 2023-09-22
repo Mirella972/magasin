@@ -9,12 +9,12 @@
         android:id="@+id/navigation_magasin"
         android:name="com.tp2.magasin.ui.magasin.MagasinFragment"
         android:label="@string/title_magasin"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_magasin" />
 
     <fragment
         android:id="@+id/navigation_panier"
         android:name="com.tp2.magasin.ui.panier.PanierFragment"
         android:label="@string/title_panier"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_panier" />
 
 </navigation>

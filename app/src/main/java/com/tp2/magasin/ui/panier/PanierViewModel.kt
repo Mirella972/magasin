@@ -1,13 +1,13 @@
-package com.tp2.magasin.ui.dashboard
+package com.tp2.magasin.ui.panier
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class PanierViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is panier Fragment"
     }
     val text: LiveData<String> = _text
 }

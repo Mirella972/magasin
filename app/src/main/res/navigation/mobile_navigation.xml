@@ -3,23 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_magasin">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.tp2.magasin.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:id="@+id/navigation_magasin"
+        android:name="com.tp2.magasin.ui.magasin.MagasinFragment"
+        android:label="@string/title_magasin"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.tp2.magasin.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:id="@+id/navigation_panier"
+        android:name="com.tp2.magasin.ui.panier.PanierFragment"
+        android:label="@string/title_panier"
         tools:layout="@layout/fragment_dashboard" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.tp2.magasin.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>

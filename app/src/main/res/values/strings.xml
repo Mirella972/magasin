@@ -1,8 +1,10 @@
 <resources>
+    <!-- TODO : changer le nom de l'application-->
     <string name="app_name">Le Magasin</string>
     <string name="title_magasin">Magasin</string>
     <string name="title_panier">Panier</string>
     <string name="nom_item">Nom item</string>
     <string name="description_item">Description de l\'item</string>
     <string name="prix_item">Prix</string>
+    <string name="admin">Admin</string>
 </resources>

@@ -13,7 +13,7 @@ interface ItemDao {
     @Query("DELETE FROM item_table")
     fun deleteAll()
 
-    // !!! Attention, dans cette version, retourne une liste et non un observable LiveData
+    // utiliser LiveData
     @Query("SELECT * FROM item_table")
     fun getAllItem(): List<Item>
 

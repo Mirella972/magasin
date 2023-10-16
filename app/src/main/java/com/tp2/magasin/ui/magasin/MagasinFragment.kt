@@ -6,31 +6,43 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.tp2.magasin.MagasinAdapter
 import com.tp2.magasin.databinding.FragmentMagasinBinding
+import com.tp2.magasin.model.Item
+import com.tp2.magasin.ui.panier.PanierViewModel
 
 class MagasinFragment : Fragment() {
 
     private var _binding: FragmentMagasinBinding? = null
     private var magasinAdapter: MagasinAdapter? = null
-   //rivate var mItems: List<Item> = ArrayList<Item>(0)
+    private var mItems: List<Item> = ArrayList<Item>(0)
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var panier: PanierViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-       //agasinViewModel =
-        //  ViewModelProvider(requireActivity()).get(MagasinAdapter::class.java)
-
+        panier = ViewModelProvider(requireActivity()).get(PanierViewModel::class.java)
         _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView: RecyclerView = binding!!.rvMagasin
+        val context = recyclerView.context
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
+        magasinAdapter = MagasinAdapter(panier)
+        recyclerView.adapter = magasinAdapter
     }
 
     override fun onDestroyView() {

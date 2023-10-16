@@ -4,36 +4,57 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.tp2.magasin.databinding.FragmentHomeBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.tp2.magasin.MagasinAdapter
+import com.tp2.magasin.databinding.FragmentMagasinBinding
+import com.tp2.magasin.model.Item
+import com.tp2.magasin.ui.panier.PanierViewModel
 
 class MagasinFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMagasinBinding? = null
+    private var magasinAdapter: MagasinAdapter? = null
+    private var mItems: List<Item> = ArrayList<Item>(0)
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var magasinViewModel: MagasinViewModel
+
+    private lateinit var panier: PanierViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        magasinViewModel =
-            ViewModelProvider(requireActivity()).get(MagasinViewModel::class.java)
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        panier = ViewModelProvider(requireActivity()).get(PanierViewModel::class.java)
+        _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        magasinViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView: RecyclerView = binding!!.rvMagasin
+        val context = recyclerView.context
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
+        magasinAdapter = MagasinAdapter(panier, context, mItems)
+        recyclerView.adapter = magasinAdapter
+
+        // Création de l'écouteur d'événements pour le RecyclerView - interface OnItemClickListenerInterface
+        /*
+        val onItemClickListener : MagasinAdapter.OnItemClickListenerInterface =
+            object : MagasinAdapter.OnItemClickListenerInterface {
+                override fun onItemClick(itemView: View?, position: Int) {
+                    val item = article[position]
+                    panier.addItemToPanier(item)
+                }
+            }
+
+         */
     }
 
     override fun onDestroyView() {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class MagasinFragment : Fragment() {
 
     private var _binding: FragmentMagasinBinding? = null
     private var magasinAdapter: MagasinAdapter? = null
-    private var mItems: List<Item> = ArrayList<Item>(0)
+    private lateinit var mItems: LiveData<List<Item>>
 
     private val binding get() = _binding!!
 
@@ -44,28 +45,27 @@ class MagasinFragment : Fragment() {
         val context = recyclerView.context
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-        magasinAdapter = MagasinAdapter(panier, context, mItems)
-        recyclerView.adapter = magasinAdapter
 
-        // Création de l'écouteur d'événements pour le RecyclerView - interface OnItemClickListenerInterface
-        /*
-        val onItemClickListener : MagasinAdapter.OnItemClickListenerInterface =
-            object : MagasinAdapter.OnItemClickListenerInterface {
-                override fun onItemClick(itemView: View?, position: Int) {
-                    val item = article[position]
-                    panier.addItemToPanier(item)
-                }
-            }
 
-         */
-
-        val itemDao : ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
-        var item : Item? = Item("Article","Desc Article",500,"meubles",3)
+        val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
+        var item: Item? = Item("Article", "Desc Article", 500, "meubles", 3)
         thread { itemDao?.deleteAll() }.join()
-        thread { itemDao?.insert(item) }.join()
+
+
+        (1..15).forEach {
+            thread { itemDao?.insert(item) }.join()
+        }
 
         thread { mItems = itemDao?.getAllItem()!! }.join()
-        magasinAdapter?.setItems(mItems)
+        mItems.observe(requireActivity()) { lst ->
+            magasinAdapter = MagasinAdapter(panier, context, lst)
+            recyclerView.adapter = magasinAdapter
+
+
+        }
+
+
+//        magasinAdapter?.setItems(mItems)
     }
 
     override fun onDestroyView() {

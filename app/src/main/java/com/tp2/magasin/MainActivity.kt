@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.admin_switch -> {
+                // Voir MagasinAdapter
                 // TODO : faire menu contextuel Admin permet la modif et sup des items
                 // TODO : afficher bouton flotant pour ajout des items
                 //showAdminContextMenu()

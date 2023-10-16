@@ -17,6 +17,6 @@
     <!-- Theme pour la toolBar -->
     <style name="ToolBarStyle" parent="ThemeOverlay.MaterialComponents.Light">
         <item name="android:background">@color/purple_500</item>
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 </resources>

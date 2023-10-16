@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.tp2.magasin"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.tp2.magasin"

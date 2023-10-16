@@ -21,6 +21,9 @@ interface ItemDao {
 
     // utiliser LiveData
     @Query("SELECT * FROM item_table")
-    fun getAllItem(): LiveData<List<Item>>
+    fun getAllItem(): List<Item>
+
+    @Query("DELETE FROM item_table")
+    fun deleteAll()
 
 }

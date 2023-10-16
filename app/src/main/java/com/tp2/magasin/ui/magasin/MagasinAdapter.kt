@@ -17,6 +17,7 @@ class MagasinAdapter(panier: PanierViewModel, private val context: Context, priv
     RecyclerView.Adapter<MagasinAdapter.ViewHolder>(){
 
     // TODO : si menu admin fonction showAdminContextMenu()
+    private var items: List<Item> = ArrayList<Item>()
 
         private var panier: PanierViewModel
         init {
@@ -79,5 +80,10 @@ class MagasinAdapter(panier: PanierViewModel, private val context: Context, priv
         override fun getItemCount(): Int {
             return article.size
         }
+    fun setItems(items : List<Item>){
+        this.items = items
+        notifyDataSetChanged()
+    }
+
 
 }

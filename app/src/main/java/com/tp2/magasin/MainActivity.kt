@@ -19,14 +19,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         // Initiation de la Toolbar : menu Admin
         val toolbar = findViewById<Toolbar>(R.id.toolbar);
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.app_name)
         //TODO : ajouter un logo application voir demo cours-06-cours
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         // Initiation du menu principal
         val navView: BottomNavigationView = binding.navView

@@ -39,6 +39,16 @@ class MagasinAdapter(panier: PanierViewModel, private val context: Context, priv
             var tvDescription: TextView = itemView.findViewById(R.id.tv_description)
             var tvPrix: TextView = itemView.findViewById(R.id.tv_prix)
             var imgCategorie: ImageView = itemView.findViewById(R.id.img_item)
+
+            init {
+                // Ajout écouteur événement sur une ligne item
+                itemView.setOnClickListener{
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(itemView, position)
+                    }
+                }
+            }
         }
 
         // Méthode pour créer une nouvelle ligne
@@ -60,9 +70,14 @@ class MagasinAdapter(panier: PanierViewModel, private val context: Context, priv
             }else {
                 holder.imgCategorie.setImageResource(android.R.drawable.ic_menu_help)
             }
+            // gestion du clic
+            holder.itemView.setOnClickListener{
+                panier.addItemToPanier(item)
+            }
         }
 
         override fun getItemCount(): Int {
             return article.size
         }
+
 }

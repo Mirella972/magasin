@@ -41,8 +41,20 @@ class MagasinFragment : Fragment() {
         val context = recyclerView.context
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-        magasinAdapter = MagasinAdapter(panier)
+        magasinAdapter = MagasinAdapter(panier, context, mItems)
         recyclerView.adapter = magasinAdapter
+
+        // Création de l'écouteur d'événements pour le RecyclerView - interface OnItemClickListenerInterface
+        /*
+        val onItemClickListener : MagasinAdapter.OnItemClickListenerInterface =
+            object : MagasinAdapter.OnItemClickListenerInterface {
+                override fun onItemClick(itemView: View?, position: Int) {
+                    val item = article[position]
+                    panier.addItemToPanier(item)
+                }
+            }
+
+         */
     }
 
     override fun onDestroyView() {

@@ -30,6 +30,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="16dp"
+                android:baselineAligned="false"
                 android:contentDescription="@string/categorie"
                 app:srcCompat="@drawable/alimentation" />
 
@@ -44,8 +45,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nom de l'article"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_prix"

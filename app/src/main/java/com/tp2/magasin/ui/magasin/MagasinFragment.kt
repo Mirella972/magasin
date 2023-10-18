@@ -35,7 +35,6 @@ class MagasinFragment : Fragment() {
     private var _binding: FragmentMagasinBinding? = null
     private var magasinAdapter: MagasinAdapter? = null
     private lateinit var mItems: LiveData<List<Item>>
-    private lateinit var sh: SharedPreferences
 
 
     private val binding get() = _binding!!
@@ -64,24 +63,37 @@ class MagasinFragment : Fragment() {
 
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
 
-//        var item: Item? = Item("Article", "Desc Article", 500, "meubles", 3)
 //        thread { itemDao?.deleteAll() }.join()
-//        thread { itemDao?.insert(item) }.join()
-//        item = Item("Article 2", "Desc Article", 300, "alimentation", 2)
-//        thread { itemDao?.insert(item) }.join()
-//        item = Item("Article 3", "Desc Article", 400, "vetements", 4)
-//        thread { itemDao?.insert(item) }.join()
-
 
         thread { mItems = itemDao?.getAllItem()!! }.join()
         mItems.observe(requireActivity()) { lst ->
             magasinAdapter = MagasinAdapter(panier, context, lst)
             recyclerView.adapter = magasinAdapter
+            Log.d("Clic", "onItemClick: ")
+
+            val onItemClickListener:MagasinAdapter.OnItemClickListenerInterface=
+                object : MagasinAdapter.OnItemClickListenerInterface {
+
+                    override fun onItemClick(itemView: View?, position: Int) {
+                        Log.d("Clic", "onItemClick: ")
+
+                    }
+
+                    override fun onClickEdit(itemView: View, position: Int) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onClickDelete(position: Int) {
+                        TODO("Not yet implemented")
+                    }
+                }
+
+            magasinAdapter?.setOnItemClickListener(onItemClickListener)
+
         }
-
-
-//        magasinAdapter?.setItems(mItems)
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

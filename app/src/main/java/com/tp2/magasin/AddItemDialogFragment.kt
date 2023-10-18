@@ -3,6 +3,7 @@ package com.tp2.magasin
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
@@ -39,9 +40,9 @@ class AddItemDialogFragment() : DialogFragment() {
                     (dialog as AlertDialog).findViewById<EditText>(R.id.et_price)?.text.toString()
                         .toInt()
                 val cat =
-                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_cat)?.text.toString()
+                    (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
                 // Retourne le nom modifié à l'activité
-                (activity as MainActivity).onNameChange(name, desc,prix,cat)
+                (activity as MainActivity).onAjoutItem(name, desc,prix,cat)
             }
             ?.setNegativeButton("Annuler") { dialog, id ->
                 getDialog()?.cancel()

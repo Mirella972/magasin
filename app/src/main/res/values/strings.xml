@@ -7,4 +7,11 @@
     <string name="prix_item">Prix :</string>
     <string name="admin">Admin</string>
     <string name="categorie">Catégorie item</string>
+    <string-array name="categories">
+        <item>Alimentation</item>
+        <item>Meubles</item>
+        <item>Vetements</item>
+    </string-array>
+    <string name="action_edit">Éditer</string>
+    <string name="action_delete">Supprimer</string>
 </resources>

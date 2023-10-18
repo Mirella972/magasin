@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -71,6 +72,9 @@ class MainActivity : AppCompatActivity() {
             val fm: FragmentManager = supportFragmentManager
             dialog.show(fm, "fragment_edit_name")
         }
+
+
+
     }
 
     // Initiation du menu admin
@@ -106,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onNameChange(name: String, desc: String, prix: Int, cat: String) {
+    fun onAjoutItem(name: String, desc: String, prix: Int, cat: String) {
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(this)?.ItemDao()
 
         item = Item(name, desc, prix, cat, 0)

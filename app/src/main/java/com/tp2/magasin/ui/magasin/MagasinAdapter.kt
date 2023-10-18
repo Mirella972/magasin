@@ -84,6 +84,9 @@ class MagasinAdapter(panier: PanierViewModel, private val context: Context, priv
         this.items = items
         notifyDataSetChanged()
     }
-
+    fun onNameChange(name: String, position: Int) {
+        items[position].name = name
+        notifyItemChanged(position)
+    }
 
 }

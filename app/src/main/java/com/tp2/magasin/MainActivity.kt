@@ -1,20 +1,37 @@
 package com.tp2.magasin
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.tp2.magasin.data.ItemDao
+import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.databinding.ActivityMainBinding
+import com.tp2.magasin.model.Item
+import com.tp2.magasin.ui.magasin.MagasinFragment
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    companion object {
+        var admin: Boolean = false
+        lateinit var item: Item
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +58,42 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        if (admin) {
+            binding.btnAjout.show()
+        } else {
+            binding.btnAjout.hide()
+        }
+
+        binding.btnAjout.setOnClickListener {
+            val dialog = AddItemDialogFragment()
+            // FragmentManager pour afficher le fragment de dialogue
+            val fm: FragmentManager = supportFragmentManager
+            dialog.show(fm, "fragment_edit_name")
+        }
     }
 
     // Initiation du menu admin
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.admin_menu, menu)
+
+        val item = menu.findItem(R.id.admin_switch)
+        val switchView = item.actionView as SwitchCompat
+
+
+        switchView.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.btnAjout.show()
+            } else {
+                binding.btnAjout.hide()
+            }
+        }
         return true
     }
 
     //Gestion du clic sur les items du menu admin
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             R.id.admin_switch -> {
                 // Voir MagasinAdapter
                 // TODO : faire menu contextuel Admin permet la modif et sup des items
@@ -59,7 +101,16 @@ class MainActivity : AppCompatActivity() {
                 //showAdminContextMenu()
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    fun onNameChange(name: String, desc: String, prix: Int, cat: String) {
+        val itemDao: ItemDao? = ItemRoomDB.getDatabase(this)?.ItemDao()
+
+        item = Item(name, desc, prix, cat, 0)
+
+        thread { itemDao?.insert(item) }.join()
     }
 }

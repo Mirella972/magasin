@@ -13,6 +13,8 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.tp2.magasin.data.ItemDao
+import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.model.Item
 import com.tp2.magasin.ui.panier.PanierViewModel
 
@@ -90,7 +92,6 @@ class MagasinAdapter(
     // Méthode pour créer une nouvelle ligne
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rangee, parent, false)
-        /*
                 //if(isAdminMode){
                     view.setOnCreateContextMenuListener { menu, v, menuInfo ->
                         val position = v.tag as Int
@@ -110,7 +111,7 @@ class MagasinAdapter(
                             false
                         }
                     }
-                //}*/
+                //}
         return ViewHolder(view)
     }
 
@@ -148,7 +149,8 @@ class MagasinAdapter(
         items[position].name = name
         items[position].description = description
         items[position].prix = prix
-        notifyItemChanged(position)
+        val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
+        itemDao?.updateItem(items[position])
     }
 
 }

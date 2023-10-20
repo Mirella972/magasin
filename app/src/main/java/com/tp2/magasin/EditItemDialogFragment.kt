@@ -6,6 +6,8 @@ import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.tp2.magasin.data.ItemDao
+import com.tp2.magasin.data.ItemRoomDB
 
 /**
  * Gestion de l'edition d'un item
@@ -30,19 +32,21 @@ class EditItemDialogFragment(var ajout: Boolean) : DialogFragment() {
         builder?.setView(inflater.inflate(R.layout.fragment_edit, null))
             // Gestion des boutons Ok et Annuler
             ?.setPositiveButton("OK") { dialog, id ->
-
+                val name =
+                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_name)?.text.toString()
+                val description =
+                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_description)?.text.toString()
+                val prix =
+                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_price)?.text.toString()
+                        .toInt()
+                val cat =
+                    (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
                 if (ajout) {
-                    val name =
-                        (dialog as AlertDialog).findViewById<EditText>(R.id.et_name)?.text.toString()
-                    val description =
-                        (dialog as AlertDialog).findViewById<EditText>(R.id.et_description)?.text.toString()
-                    val prix =
-                        (dialog as AlertDialog).findViewById<EditText>(R.id.et_price)?.text.toString()
-                            .toInt()
-                    val cat =
-                        (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
+
                     // Retourne le nom modifié à l'activité
                     (activity as MainActivity).onAjoutItem(name, description, prix, cat)
+                } else {
+                    (activity as MagasinAdapter).onItemChange(name,description,prix, position)
                 }
 
 

@@ -1,14 +1,8 @@
 package com.tp2.magasin
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.widget.Switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -22,7 +16,6 @@ import com.tp2.magasin.data.ItemDao
 import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.databinding.ActivityMainBinding
 import com.tp2.magasin.model.Item
-import com.tp2.magasin.ui.magasin.MagasinFragment
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -67,14 +60,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAjout.setOnClickListener {
-            val dialog = AddItemDialogFragment()
+            val dialog = EditItemDialogFragment()
             // FragmentManager pour afficher le fragment de dialogue
             val fm: FragmentManager = supportFragmentManager
             dialog.show(fm, "fragment_edit_name")
         }
-
-
-
     }
 
     // Initiation du menu admin
@@ -101,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             R.id.admin_switch -> {
                 // Voir MagasinAdapter
                 // TODO : faire menu contextuel Admin permet la modif et sup des items
-                // TODO : afficher bouton flotant pour ajout des items
                 //showAdminContextMenu()
                 return true
             }

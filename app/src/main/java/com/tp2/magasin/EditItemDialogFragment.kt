@@ -8,23 +8,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
 /**
- * Exemple de boîte de dialogue personnalisée pour modifier le nom d'une personne
+ * Gestion de l'edition d'un item
  */
-class AddItemDialogFragment() : DialogFragment() {
+class EditItemDialogFragment() : DialogFragment() {
     var position: Int = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = activity?.let { AlertDialog.Builder(it) }
-        // Layout Inflater : Responsable de l'affichage du layout
-        // requireActivity() : Servi par l'activité appelante (ici, MainActivity)
         val inflater = requireActivity().layoutInflater
 
         // Récupère les arguments passés à la boîte de dialogue depuis l'activité appelante
         arguments?.let {
             val name = it.getString("name")
-            val desc = it.getString("desc")
+            val description = it.getString("description")
             val prix = it.getInt("prix")
             position = it.getInt("position")
-            builder?.setTitle("Modifier le nom de $name")
+            builder?.setTitle("Modifier les informations de $name")
         }
 
         // Importe le layout de la boîte de dialogue
@@ -34,7 +32,7 @@ class AddItemDialogFragment() : DialogFragment() {
             ?.setPositiveButton("OK") { dialog, id ->
                 val name =
                     (dialog as AlertDialog).findViewById<EditText>(R.id.et_name)?.text.toString()
-                val desc =
+                val description =
                     (dialog as AlertDialog).findViewById<EditText>(R.id.et_description)?.text.toString()
                 val prix =
                     (dialog as AlertDialog).findViewById<EditText>(R.id.et_price)?.text.toString()
@@ -42,7 +40,7 @@ class AddItemDialogFragment() : DialogFragment() {
                 val cat =
                     (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
                 // Retourne le nom modifié à l'activité
-                (activity as MainActivity).onAjoutItem(name, desc,prix,cat)
+                (activity as MagasinAdapter).onItemChange(name, description,prix, position)
             }
             ?.setNegativeButton("Annuler") { dialog, id ->
                 getDialog()?.cancel()

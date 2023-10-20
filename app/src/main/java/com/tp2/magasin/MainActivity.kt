@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAjout.setOnClickListener {
-            val dialog = EditItemDialogFragment()
+            val dialog = EditItemDialogFragment(true)
             // FragmentManager pour afficher le fragment de dialogue
             val fm: FragmentManager = supportFragmentManager
             dialog.show(fm, "fragment_edit_name")

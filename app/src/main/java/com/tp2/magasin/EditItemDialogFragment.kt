@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 /**
  * Gestion de l'edition d'un item
  */
-class EditItemDialogFragment() : DialogFragment() {
+class EditItemDialogFragment(var ajout: Boolean) : DialogFragment() {
     var position: Int = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = activity?.let { AlertDialog.Builder(it) }
@@ -30,17 +30,22 @@ class EditItemDialogFragment() : DialogFragment() {
         builder?.setView(inflater.inflate(R.layout.fragment_edit, null))
             // Gestion des boutons Ok et Annuler
             ?.setPositiveButton("OK") { dialog, id ->
-                val name =
-                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_name)?.text.toString()
-                val description =
-                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_description)?.text.toString()
-                val prix =
-                    (dialog as AlertDialog).findViewById<EditText>(R.id.et_price)?.text.toString()
-                        .toInt()
-                val cat =
-                    (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
-                // Retourne le nom modifié à l'activité
-                (activity as MagasinAdapter).onItemChange(name, description,prix, position)
+
+                if (ajout) {
+                    val name =
+                        (dialog as AlertDialog).findViewById<EditText>(R.id.et_name)?.text.toString()
+                    val description =
+                        (dialog as AlertDialog).findViewById<EditText>(R.id.et_description)?.text.toString()
+                    val prix =
+                        (dialog as AlertDialog).findViewById<EditText>(R.id.et_price)?.text.toString()
+                            .toInt()
+                    val cat =
+                        (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
+                    // Retourne le nom modifié à l'activité
+                    (activity as MainActivity).onAjoutItem(name, description, prix, cat)
+                }
+
+
             }
             ?.setNegativeButton("Annuler") { dialog, id ->
                 getDialog()?.cancel()

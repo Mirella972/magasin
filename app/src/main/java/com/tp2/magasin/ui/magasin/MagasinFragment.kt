@@ -46,19 +46,19 @@ class MagasinFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val recyclerView: RecyclerView = binding.rvMagasin
+
         val context = recyclerView.context
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
         // Récupérer les items
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
-
         thread { mItems = itemDao?.getAllItem()!! }.join()
         mItems.observe(requireActivity()) { lst ->
             magasinAdapter = MagasinAdapter(panier, context, lst, MainActivity.admin)
             recyclerView.adapter = magasinAdapter
-            Log.d("Clic", "onItemClick: ")
 
             val onItemClickListener =
                 object : MagasinAdapter.OnItemClickListenerInterface {
@@ -66,24 +66,23 @@ class MagasinFragment : Fragment() {
                     override fun onItemClick(itemView: View?, position: Int) {
                         Log.d("Clic", "onItemClick: ")
 
+
                     }
-                    /*
                     override fun onClickEdit(itemView: View, position: Int) {
-                        val item = magasinAdapter?.getItemId(position) as Item
-                        if (item != null){
-                            val dialog = EditItemDialogFragment()
-                            val args = Bundle()
-                            args.putString("name", item.name)
-                            args.putString("description", item.description)
-                            args.putInt("prix", item.prix)
-
-                            dialog.arguments = args
-                            val fm: FragmentManager = supportFragmentManager
-                            dialog.show(fm, "fragment_edit_item")
-                        }
+//                        val item = magasinAdapter?.getItemId(position) as Item
+//                        if (item != null){
+//                            val dialog = EditItemDialogFragment()
+//                            val args = Bundle()
+//                            args.putString("name", item.name)
+//                            args.putString("description", item.description)
+//                            args.putInt("prix", item.prix)
+//
+//                            dialog.arguments = args
+//                            val fm: FragmentManager = supportFragmentManager
+//                            dialog.show(fm, "fragment_edit_item")
+//                        }
 
                     }
-                    */
                     override fun onClickDelete(position: Int) {
                         val item = magasinAdapter?.getItemId(position) as Item
                         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.tp2.magasin.model.Item
@@ -53,13 +54,16 @@ class MagasinAdapter(
         init {
 
             // Ajout écouteur événement sur une ligne item
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                Toast.makeText(itemView.context, "Item clicked at position: $position", Toast.LENGTH_SHORT).show()
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onItemClick(itemView, position)
-                }
-            }
+            //on l'a pas besoin
+//            itemView.setOnClickListener {
+//                val position = adapterPosition
+//                //Toast.makeText(itemView.context, "Item clicked at position: $position", Toast.LENGTH_SHORT).show()
+//                if (position != RecyclerView.NO_POSITION) {
+//                    listener.onItemClick(itemView, position)
+//                }
+//            }
+
+
             // if(isAdmin)
             itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
                 val position = adapterPosition
@@ -86,59 +90,59 @@ class MagasinAdapter(
     // Méthode pour créer une nouvelle ligne
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rangee, parent, false)
-/*
-        //if(isAdminMode){
-            view.setOnCreateContextMenuListener { menu, v, menuInfo ->
-                val position = v.tag as Int
-                val edit: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_edit)
-                val delete: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_delete)
-                // Ajoute un écouteur d'événement sur les items du menu contextuel
-                edit.setOnMenuItemClickListener {
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onClickEdit(v, position)
+        /*
+                //if(isAdminMode){
+                    view.setOnCreateContextMenuListener { menu, v, menuInfo ->
+                        val position = v.tag as Int
+                        val edit: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_edit)
+                        val delete: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_delete)
+                        // Ajoute un écouteur d'événement sur les items du menu contextuel
+                        edit.setOnMenuItemClickListener {
+                            if (position != RecyclerView.NO_POSITION) {
+                                listener.onClickEdit(v, position)
+                            }
+                            false
+                        }
+                        delete.setOnMenuItemClickListener {
+                            if (position != RecyclerView.NO_POSITION) {
+                                listener.onClickDelete(position)
+                            }
+                            false
+                        }
                     }
-                    false
-                }
-                delete.setOnMenuItemClickListener {
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onClickDelete(position)
-                    }
-                    false
-                }
-            }
-        //}*/
+                //}*/
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: Item = article[position]
+        item.quantite = 1
         holder.tvName.text = item.name
         holder.itemView.tag = position
         holder.tvDescription.text = item.description
         holder.tvPrix.text = Integer.toString(item.prix)
         var categorie = item.categorie.lowercase()
+
         val resources = context.resources
         val resourceId = resources.getIdentifier(categorie, "drawable", context.packageName)
+
         if (resourceId != 0) {
             holder.imgCategorie.setImageResource(resourceId)
         } else {
             holder.imgCategorie.setImageResource(android.R.drawable.ic_menu_help)
         }
-        /*
+
         // gestion du clic
         holder.itemView.setOnClickListener {
             panier.addItemToPanier(item)
-        }*/
+        }
+
     }
 
     override fun getItemCount(): Int {
         return article.size
     }
-/*
-    fun setItems(items: List<Item>) {
-        this.items = items
-        notifyDataSetChanged()
-    }*/
+
 
     fun onItemChange(name: String, description: String, prix: Int, position: Int) {
         items[position].name = name

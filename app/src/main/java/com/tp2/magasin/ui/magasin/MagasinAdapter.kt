@@ -66,7 +66,7 @@ class MagasinAdapter(
 //            }
 
 
-            // if(isAdmin)
+            // if(isAdmin) {
             itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
                 val position = adapterPosition
 
@@ -86,32 +86,13 @@ class MagasinAdapter(
                     false
                 }
             }
+            //}
         }
     }
 
     // Méthode pour créer une nouvelle ligne
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rangee, parent, false)
-                //if(isAdminMode){
-                    view.setOnCreateContextMenuListener { menu, v, menuInfo ->
-                        val position = v.tag as Int
-                        val edit: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_edit)
-                        val delete: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_delete)
-                        // Ajoute un écouteur d'événement sur les items du menu contextuel
-                        edit.setOnMenuItemClickListener {
-                            if (position != RecyclerView.NO_POSITION) {
-                                listener.onClickEdit(v, position)
-                            }
-                            false
-                        }
-                        delete.setOnMenuItemClickListener {
-                            if (position != RecyclerView.NO_POSITION) {
-                                listener.onClickDelete(position)
-                            }
-                            false
-                        }
-                    }
-                //}
         return ViewHolder(view)
     }
 
@@ -145,10 +126,11 @@ class MagasinAdapter(
     }
 
 
-    fun onItemChange(name: String, description: String, prix: Int, position: Int) {
+    fun onItemChange(name: String, description: String, prix: Int, cat: String, position: Int) {
         items[position].name = name
         items[position].description = description
         items[position].prix = prix
+        items[position].categorie = cat
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
         itemDao?.updateItem(items[position])
     }

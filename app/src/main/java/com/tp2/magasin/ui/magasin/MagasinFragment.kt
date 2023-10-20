@@ -28,7 +28,7 @@ class MagasinFragment : Fragment() {
     private var magasinAdapter: MagasinAdapter? = null
     private lateinit var mItems: LiveData<List<Item>>
 
-
+    private lateinit var itemList: List<Item>
     private val binding get() = _binding!!
 
     private lateinit var panier: PanierViewModel
@@ -59,6 +59,7 @@ class MagasinFragment : Fragment() {
         mItems.observe(requireActivity()) { lst ->
             magasinAdapter = MagasinAdapter(panier, context, lst, MainActivity.admin)
             recyclerView.adapter = magasinAdapter
+            itemList = lst
 
             val onItemClickListener =
                 object : MagasinAdapter.OnItemClickListenerInterface {
@@ -68,7 +69,7 @@ class MagasinFragment : Fragment() {
                     }
 
                     override fun onClickEdit(itemView: View, position: Int) {
-                        val item = magasinAdapter?.getItemId(position) as Item
+                        val item = itemList[position]
                         val ajout = false
                         if (item != null){
                             val dialog = EditItemDialogFragment(ajout)
@@ -76,16 +77,14 @@ class MagasinFragment : Fragment() {
                             args.putString("name", item.name)
                             args.putString("description", item.description)
                             args.putInt("prix", item.prix)
-
                             dialog.arguments = args
-                            val fm: FragmentManager = requireActivity().supportFragmentManager
-                            dialog.show(fm, "fragment_edit_item")
+                            dialog.show((context as MainActivity).supportFragmentManager, "fragment_edit_item")
                         }
 
                     }
 
                     override fun onClickDelete(position: Int) {
-                        val item = magasinAdapter?.getItemId(position) as Item
+                        val item = itemList[position]
                         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
                         itemDao?.deleteItem(item)
                     }

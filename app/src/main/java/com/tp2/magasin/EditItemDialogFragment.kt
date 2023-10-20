@@ -46,7 +46,7 @@ class EditItemDialogFragment(var ajout: Boolean) : DialogFragment() {
                     // Retourne le nom modifié à l'activité
                     (activity as MainActivity).onAjoutItem(name, description, prix, cat)
                 } else {
-                    (activity as MagasinAdapter).onItemChange(name,description,prix, position)
+                    (activity as MagasinAdapter).onItemChange(name,description,prix, cat, position)
                 }
 
 

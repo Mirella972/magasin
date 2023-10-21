@@ -12,8 +12,8 @@ import com.tp2.magasin.data.ItemRoomDB
 /**
  * Gestion de l'edition d'un item
  */
-class EditItemDialogFragment(var ajout: Boolean) : DialogFragment() {
-    var position: Int = 0
+class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragment() {
+    //var position: Int = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = activity?.let { AlertDialog.Builder(it) }
         val inflater = requireActivity().layoutInflater
@@ -23,7 +23,7 @@ class EditItemDialogFragment(var ajout: Boolean) : DialogFragment() {
             val name = it.getString("name")
             val description = it.getString("description")
             val prix = it.getInt("prix")
-            position = it.getInt("position")
+            //position = it.getInt("position")
             builder?.setTitle("Modifier les informations de $name")
         }
 

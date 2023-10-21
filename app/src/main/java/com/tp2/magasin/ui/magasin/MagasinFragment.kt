@@ -69,10 +69,11 @@ class MagasinFragment : Fragment() {
                     }
 
                     override fun onClickEdit(itemView: View, position: Int) {
+                        Log.d("Edition", "item a changer :" + itemList[position])
                         val item = itemList[position]
                         val ajout = false
                         if (item != null){
-                            val dialog = EditItemDialogFragment(ajout)
+                            val dialog = EditItemDialogFragment(ajout, position)
                             val args = Bundle()
                             args.putString("name", item.name)
                             args.putString("description", item.description)

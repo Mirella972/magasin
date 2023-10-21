@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var admin: Boolean = false
         lateinit var item: Item
+        var selectedPosition: Int = -1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAjout.setOnClickListener {
-            val dialog = EditItemDialogFragment(true)
+            val dialog = EditItemDialogFragment(true, selectedPosition)
             // FragmentManager pour afficher le fragment de dialogue
             val fm: FragmentManager = supportFragmentManager
             dialog.show(fm, "fragment_edit_name")
@@ -102,8 +103,10 @@ class MainActivity : AppCompatActivity() {
     fun onAjoutItem(name: String, desc: String, prix: Int, cat: String) {
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(this)?.ItemDao()
 
-        item = Item(name, desc, prix, cat, 0)
+        if(selectedPosition < 0) {
+            item = Item(name, desc, prix, cat, 0)
+            thread { itemDao?.insert(item) }.join()
+        }
 
-        thread { itemDao?.insert(item) }.join()
     }
 }

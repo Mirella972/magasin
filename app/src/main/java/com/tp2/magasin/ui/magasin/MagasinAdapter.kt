@@ -17,6 +17,7 @@ import com.tp2.magasin.data.ItemDao
 import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.model.Item
 import com.tp2.magasin.ui.panier.PanierViewModel
+import kotlin.concurrent.thread
 
 class MagasinAdapter(
     private var panier: PanierViewModel,
@@ -120,12 +121,14 @@ class MagasinAdapter(
 
 
     fun onItemChange(name: String, description: String, prix: Int, cat: String, position: Int) {
-        items[position].name = name
-        items[position].description = description
-        items[position].prix = prix
-        items[position].categorie = cat
+//        items[position].name = name
+//        items[position].description = description
+//        items[position].prix = prix
+//        items[position].categorie = cat
+        var item = Item(name,description,prix,cat,1)
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
-        itemDao?.updateItem(items[position])
+        thread { itemDao?.updateItem(item) }
+        //itemDao?.updateItem(items[position])
     }
 
     fun setItems(lst_items: List<Item>) {

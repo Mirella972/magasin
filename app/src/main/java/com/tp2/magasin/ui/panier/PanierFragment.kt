@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tp2.magasin.MagasinAdapter
 import com.tp2.magasin.MainActivity
+import com.tp2.magasin.R
 import com.tp2.magasin.data.ItemDao
 import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.databinding.FragmentPanierBinding
@@ -22,6 +23,7 @@ class PanierFragment : Fragment() {
 
     private var _binding: FragmentPanierBinding? = null
     private var panierAdapter: PanierAdapter? = null
+    private lateinit var totalTextView : TextView
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -51,14 +53,15 @@ class PanierFragment : Fragment() {
         val context = recyclerView.context
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-
+        totalTextView = view.findViewById(R.id.tv_total)
         panierAdapter = PanierAdapter(context)
         recyclerView.adapter = panierAdapter
 
         showViewModel.items.observe(viewLifecycleOwner) { lstItems ->
-
         panierAdapter!!.setItems(lstItems)
-
+        }
+        showViewModel.total.observe(viewLifecycleOwner) { totalValue ->
+            totalTextView.text = "Total: $${String.format("%.2f", totalValue)}"
         }
     }
 

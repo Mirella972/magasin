@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val _admin = MutableLiveData<Boolean>().apply { value = false }
-        val admin: LiveData<Boolean> get() = _admin  // Pour observer depuis d'autres classes
+        val admin: LiveData<Boolean> get() = _admin
 
         fun setAdminStatus(status: Boolean) {
             _admin.value = status

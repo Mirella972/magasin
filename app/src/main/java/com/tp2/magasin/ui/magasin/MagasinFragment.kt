@@ -98,7 +98,7 @@ class MagasinFragment : Fragment() {
                     override fun onClickDelete(position: Int) {
                         val item = itemList[position]
                         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
-                        itemDao?.deleteItem(item)
+                        thread { itemDao?.deleteItem(item) }
                     }
                 }
 
@@ -106,10 +106,6 @@ class MagasinFragment : Fragment() {
 
         }
     }
-    fun updateAdapterAdminStatus(isAdmin: Boolean) {
-        magasinAdapter?.updateAdminStatus(isAdmin)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -25,7 +25,6 @@ class MagasinAdapter(
 ) :
     RecyclerView.Adapter<MagasinAdapter.ViewHolder>() {
 
-    // TODO : si menu admin fonction showAdminContextMenu()
     private var items: List<Item> = mutableListOf()
     private var isAdmin: Boolean = false
     //private var panierList: List<Item> = mutableListOf()
@@ -34,7 +33,6 @@ class MagasinAdapter(
         this.panier = panier
     }
 
-    // TODO  : les clics pour ajouter au panier
     //Interface pour gérer les clics sur un item de la liste
     interface OnItemClickListenerInterface {
         fun onItemClick(itemView: View?, position: Int)

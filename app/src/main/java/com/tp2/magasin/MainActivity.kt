@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Initiation de la Toolbar : menu Admin
-        val toolbar = findViewById<Toolbar>(R.id.toolbar);
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.app_name)
-        //TODO : ajouter un logo application voir demo cours-06-cours
+        supportActionBar?.title =getString(R.string.title_magasin)
+        supportActionBar?.setLogo(R.drawable.logo)
 
         // Initiation du menu principal
         val navView: BottomNavigationView = binding.navView

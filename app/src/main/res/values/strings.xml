@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">LepZiad</string>
-    <string name="title_magasin">Magasin</string>
+    <string name="title_magasin">LepZiap Shop</string>
     <string name="title_panier">Panier</string>
     <string name="nom_item">Nom item :</string>
     <string name="description_item">Description de l\'item :</string>

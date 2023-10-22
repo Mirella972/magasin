@@ -42,7 +42,6 @@ class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragm
                 val cat =
                     (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
                 if (ajout) {
-
                     // Retourne le nom modifié à l'activité
                     (activity as MainActivity).onAjoutItem(name, description, prix, cat)
                 } else {

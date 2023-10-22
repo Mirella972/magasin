@@ -20,14 +20,14 @@ import com.tp2.magasin.ui.panier.PanierViewModel
 
 class MagasinAdapter(
     private var panier: PanierViewModel,
-    private val context: Context,
-    private val article: List<Item>,
-    private val isAdminMode: Boolean
+    private val context: Context
 ) :
     RecyclerView.Adapter<MagasinAdapter.ViewHolder>() {
 
     // TODO : si menu admin fonction showAdminContextMenu()
-    private var items: List<Item> = ArrayList<Item>()
+    private var items: List<Item> = mutableListOf()
+    private var isAdmin: Boolean = false
+    //private var panierList: List<Item> = mutableListOf()
 
     init {
         this.panier = panier
@@ -55,38 +55,31 @@ class MagasinAdapter(
 
         init {
 
-            // Ajout écouteur événement sur une ligne item
-            //on l'a pas besoin
-//            itemView.setOnClickListener {
-//                val position = adapterPosition
-//                //Toast.makeText(itemView.context, "Item clicked at position: $position", Toast.LENGTH_SHORT).show()
-//                if (position != RecyclerView.NO_POSITION) {
-//                    listener.onItemClick(itemView, position)
-//                }
-//            }
-
-
-            // if(isAdmin) {
             itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
-                val position = adapterPosition
 
-                val edit: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_edit)
-                val delete: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_delete)
-                // Ajoute un écouteur d'événement sur les items du menu contextuel
-                edit.setOnMenuItemClickListener {
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onClickEdit(itemView, position)
+                if (isAdmin) {
+                    val position = adapterPosition
+                    Toast.makeText(context, "Item clicked. isAdmin: $isAdmin", Toast.LENGTH_SHORT)
+                        .show()
+
+                    val edit: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_edit)
+                    val delete: android.view.MenuItem = menu.add(0, v.id, 0, R.string.action_delete)
+                    // Ajoute un écouteur d'événement sur les items du menu contextuel
+                    edit.setOnMenuItemClickListener {
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onClickEdit(itemView, position)
+                        }
+                        false
                     }
-                    false
-                }
-                delete.setOnMenuItemClickListener {
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onClickDelete(position)
+                    delete.setOnMenuItemClickListener {
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onClickDelete(position)
+                        }
+                        false
                     }
-                    false
                 }
+
             }
-            //}
         }
     }
 
@@ -97,7 +90,7 @@ class MagasinAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Item = article[position]
+        val item: Item = items[position]
         item.quantite = 1
         holder.tvName.text = item.name
         holder.itemView.tag = position
@@ -122,7 +115,7 @@ class MagasinAdapter(
     }
 
     override fun getItemCount(): Int {
-        return article.size
+        return items.size
     }
 
 
@@ -133,6 +126,16 @@ class MagasinAdapter(
         items[position].categorie = cat
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
         itemDao?.updateItem(items[position])
+    }
+
+    fun setItems(lst_items: List<Item>) {
+        items = lst_items
+        notifyDataSetChanged()
+    }
+
+    fun updateAdminStatus(admin: Boolean) {
+        isAdmin = admin
+        notifyDataSetChanged()
     }
 
 }

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -23,7 +25,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     companion object {
-        var admin: Boolean = false
+        private val _admin = MutableLiveData<Boolean>().apply { value = false }
+        val admin: LiveData<Boolean> get() = _admin  // Pour observer depuis d'autres classes
+
+        fun setAdminStatus(status: Boolean) {
+            _admin.value = status
+        }
         lateinit var item: Item
         var selectedPosition: Int = -1
     }
@@ -54,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        if (admin) {
+        if (_admin.value == true) {
             binding.btnAjout.show()
         } else {
             binding.btnAjout.hide()
@@ -78,8 +85,10 @@ class MainActivity : AppCompatActivity() {
 
         switchView.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                setAdminStatus(true)
                 binding.btnAjout.show()
             } else {
+                setAdminStatus(false)
                 binding.btnAjout.hide()
             }
         }

@@ -3,6 +3,7 @@ package com.tp2.magasin.ui.magasin
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.os.bundleOf
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -56,33 +57,43 @@ class MagasinFragment : Fragment() {
         // Récupérer les items
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
         thread { mItems = itemDao?.getAllItem()!! }.join()
+        magasinAdapter = MagasinAdapter(panier, context)
+        recyclerView.adapter = magasinAdapter
+
+
+        MainActivity.admin.observe(viewLifecycleOwner) { isAdmin ->
+            magasinAdapter?.updateAdminStatus(isAdmin)
+        }
+
         mItems.observe(requireActivity()) { lst ->
-            magasinAdapter = MagasinAdapter(panier, context, lst, MainActivity.admin)
-            recyclerView.adapter = magasinAdapter
+        magasinAdapter!!.setItems(lst)
             itemList = lst
 
             val onItemClickListener =
                 object : MagasinAdapter.OnItemClickListenerInterface {
 
                     override fun onItemClick(itemView: View?, position: Int) {
-                        Log.d("Clic", "onItemClick: ")
+                        Log.d("Adminnnn", "${MainActivity.admin}")
                     }
 
                     override fun onClickEdit(itemView: View, position: Int) {
-                        Log.d("Edition", "item a changer :" + itemList[position])
+                        Log.d("Adminnnn", "${MainActivity.admin}")
+
+                        Log.d("Edition", "item a changer : ${itemList[position]}")
                         val item = itemList[position]
-                        val ajout = false
-                        if (item != null){
-                            val dialog = EditItemDialogFragment(ajout, position)
-                            val args = Bundle()
-                            args.putString("name", item.name)
-                            args.putString("description", item.description)
-                            args.putInt("prix", item.prix)
-                            dialog.arguments = args
+
+                        item?.let {
+                            val dialog = EditItemDialogFragment(false, position).apply {
+                                arguments = bundleOf(
+                                    "name" to it.name,
+                                    "description" to it.description,
+                                    "prix" to it.prix
+                                )
+                            }
                             dialog.show((context as MainActivity).supportFragmentManager, "fragment_edit_item")
                         }
-
                     }
+
 
                     override fun onClickDelete(position: Int) {
                         val item = itemList[position]
@@ -94,6 +105,9 @@ class MagasinFragment : Fragment() {
             magasinAdapter?.setOnItemClickListener(onItemClickListener)
 
         }
+    }
+    fun updateAdapterAdminStatus(isAdmin: Boolean) {
+        magasinAdapter?.updateAdminStatus(isAdmin)
     }
 
     override fun onDestroyView() {

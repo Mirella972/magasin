@@ -60,11 +60,12 @@ class MagasinFragment : Fragment() {
         magasinAdapter = MagasinAdapter(panier, context)
         recyclerView.adapter = magasinAdapter
 
-
+        // Observe si menu admin est actif
         MainActivity.admin.observe(viewLifecycleOwner) { isAdmin ->
             magasinAdapter?.updateAdminStatus(isAdmin)
         }
 
+        // Observe la liste items
         mItems.observe(requireActivity()) { lst ->
         magasinAdapter!!.setItems(lst)
             itemList = lst
@@ -77,9 +78,6 @@ class MagasinFragment : Fragment() {
                     }
 
                     override fun onClickEdit(itemView: View, position: Int) {
-                        Log.d("Adminnnn", "${MainActivity.admin}")
-
-                        Log.d("Edition", "item a changer : ${itemList[position]}")
                         val item = itemList[position]
 
                         item?.let {

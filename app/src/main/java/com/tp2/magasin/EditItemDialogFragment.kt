@@ -8,12 +8,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.tp2.magasin.data.ItemDao
 import com.tp2.magasin.data.ItemRoomDB
+import com.tp2.magasin.model.Item
 
 /**
  * Gestion de l'edition d'un item
  */
 class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragment() {
-    //var position: Int = 0
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = activity?.let { AlertDialog.Builder(it) }
         val inflater = requireActivity().layoutInflater
@@ -25,14 +25,11 @@ class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragm
             val name = it.getString("name")
             val description = it.getString("description")
             val prix = it.getInt("prix")
-            //position = it.getInt("position")
             builder?.setTitle("Modifier les informations de $name")
         }
 
-        // Importe le layout de la boîte de dialogue
-        // Le paramètre null est nécessaire car le layout est directement lié à la boîte de dialogue et non ancré dans un parent
+        // Importe le layout de la boîte de dialogue pour ajout et edition
         builder?.setView(inflater.inflate(R.layout.fragment_edit, null))
-            // Gestion des boutons Ok et Annuler
             ?.setPositiveButton("OK") { dialog, id ->
                 val name =
                     (dialog as AlertDialog).findViewById<EditText>(R.id.et_name)?.text.toString()
@@ -44,7 +41,6 @@ class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragm
                 val cat =
                     (dialog as AlertDialog).findViewById<Spinner>(R.id.et_cat)?.selectedItem.toString()
                 if (ajout) {
-                    // Retourne le nom modifié à l'activité
                     (activity as MainActivity).onAjoutItem(name, description, prix, cat)
                 } else {
                     (activity as MainActivity).onItemChange(idItem,name,description,prix, cat)

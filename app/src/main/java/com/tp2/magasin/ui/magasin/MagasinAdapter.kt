@@ -27,7 +27,6 @@ class MagasinAdapter(
 
     private var items: List<Item> = mutableListOf()
     private var isAdmin: Boolean = false
-    //private var panierList: List<Item> = mutableListOf()
 
     init {
         this.panier = panier

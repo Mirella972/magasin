@@ -49,10 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initiation du menu principal
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_magasin, R.id.navigation_panier
@@ -106,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Fonction pour Ajouter
     fun onAjoutItem(name: String, desc: String, prix: Int, cat: String) {
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(this)?.ItemDao()
 
@@ -116,12 +114,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Fonction pour Editer
     fun onItemChange(id: Int, name: String, description: String, prix: Int, cat: String) {
         val itemDao: ItemDao? = ItemRoomDB.getDatabase(this)?.ItemDao()
         thread {
             // Obtenir l'élément existant de la base de données
             val existingItem = itemDao?.getItemById(id)
-
 
             if (existingItem != null) {
                 existingItem.name = name
@@ -129,7 +127,6 @@ class MainActivity : AppCompatActivity() {
                 existingItem.prix = prix
                 existingItem.description = description
                 itemDao?.updateItem(existingItem)
-
             }
 
         }

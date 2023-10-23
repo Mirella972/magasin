@@ -24,11 +24,7 @@ class PanierFragment : Fragment() {
     private var _binding: FragmentPanierBinding? = null
     private var panierAdapter: PanierAdapter? = null
     private lateinit var totalTextView : TextView
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    //private lateinit var show: PanierViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,

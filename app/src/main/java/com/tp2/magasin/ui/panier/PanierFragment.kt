@@ -1,7 +1,6 @@
 package com.tp2.magasin.ui.panier
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.tp2.magasin.MagasinAdapter
-import com.tp2.magasin.MainActivity
 import com.tp2.magasin.R
-import com.tp2.magasin.data.ItemDao
-import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.databinding.FragmentPanierBinding
-import com.tp2.magasin.model.Item
-import kotlin.concurrent.thread
 
 class PanierFragment : Fragment() {
 

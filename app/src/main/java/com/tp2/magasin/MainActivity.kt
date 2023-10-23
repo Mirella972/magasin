@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                 existingItem.categorie = cat
                 existingItem.prix = prix
                 existingItem.description = description
-                itemDao?.updateItem(existingItem)
+                itemDao.updateItem(existingItem)
             }
 
         }

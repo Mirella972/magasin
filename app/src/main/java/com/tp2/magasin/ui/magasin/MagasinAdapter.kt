@@ -1,23 +1,16 @@
 package com.tp2.magasin
 
-import android.content.ClipDescription
-import android.graphics.drawable.Drawable
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.tp2.magasin.data.ItemDao
-import com.tp2.magasin.data.ItemRoomDB
 import com.tp2.magasin.model.Item
 import com.tp2.magasin.ui.panier.PanierViewModel
-import kotlin.concurrent.thread
 
 class MagasinAdapter(
     private var panier: PanierViewModel,

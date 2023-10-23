@@ -6,9 +6,6 @@ import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.tp2.magasin.data.ItemDao
-import com.tp2.magasin.data.ItemRoomDB
-import com.tp2.magasin.model.Item
 
 /**
  * Gestion de l'edition d'un item
@@ -23,8 +20,6 @@ class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragm
         arguments?.let {
             idItem = it.getInt("id")
             val name = it.getString("name")
-            val description = it.getString("description")
-            val prix = it.getInt("prix")
             builder?.setTitle("Modifier les informations de $name")
         }
 

@@ -17,8 +17,6 @@ import com.tp2.magasin.databinding.FragmentMagasinBinding
 import com.tp2.magasin.model.Item
 import com.tp2.magasin.ui.panier.PanierViewModel
 import kotlin.concurrent.thread
-import android.util.Log
-import androidx.fragment.app.FragmentManager
 import com.tp2.magasin.EditItemDialogFragment
 import com.tp2.magasin.MainActivity
 
@@ -74,13 +72,13 @@ class MagasinFragment : Fragment() {
                 object : MagasinAdapter.OnItemClickListenerInterface {
 
                     override fun onItemClick(itemView: View?, position: Int) {
-                        Log.d("Adminnnn", "${MainActivity.admin}")
+                        //Log.d("Adminnnn", "${MainActivity.admin}")
                     }
 
                     override fun onClickEdit(itemView: View, position: Int) {
                         val item = itemList[position]
 
-                        item?.let {
+                        item.let {
                             val dialog = EditItemDialogFragment(false, position).apply {
                                 arguments = bundleOf(
                                     "id" to it.id,

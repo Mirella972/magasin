@@ -17,9 +17,11 @@ class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragm
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = activity?.let { AlertDialog.Builder(it) }
         val inflater = requireActivity().layoutInflater
+        var idItem : Int = 0
 
         // Récupère les arguments passés à la boîte de dialogue depuis l'activité appelante
         arguments?.let {
+            idItem = it.getInt("id")
             val name = it.getString("name")
             val description = it.getString("description")
             val prix = it.getInt("prix")
@@ -45,7 +47,7 @@ class EditItemDialogFragment(var ajout: Boolean, var position:Int) : DialogFragm
                     // Retourne le nom modifié à l'activité
                     (activity as MainActivity).onAjoutItem(name, description, prix, cat)
                 } else {
-                    (activity as MagasinAdapter).onItemChange(name,description,prix, cat, position)
+                    (activity as MainActivity).onItemChange(idItem,name,description,prix, cat)
                 }
 
 

@@ -18,7 +18,8 @@ interface ItemDao {
 
     @Delete
     fun deleteItem(item: Item)
-
+    @Query("SELECT * FROM item_table WHERE id = :id")
+    fun getItemById(id: Int): Item?
     @Query("SELECT * FROM item_table")
     fun getAllItem(): LiveData<List<Item>>
 

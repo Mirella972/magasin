@@ -115,4 +115,24 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun onItemChange(id: Int, name: String, description: String, prix: Int, cat: String) {
+        val itemDao: ItemDao? = ItemRoomDB.getDatabase(this)?.ItemDao()
+        thread {
+            // Obtenir l'élément existant de la base de données
+            val existingItem = itemDao?.getItemById(id)
+
+
+            if (existingItem != null) {
+                existingItem.name = name
+                existingItem.categorie = cat
+                existingItem.prix = prix
+                existingItem.description = description
+                itemDao?.updateItem(existingItem)
+
+            }
+
+        }
+    }
+
 }

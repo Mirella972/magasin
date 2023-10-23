@@ -117,18 +117,6 @@ class MagasinAdapter(
         return items.size
     }
 
-
-    fun onItemChange(name: String, description: String, prix: Int, cat: String, position: Int) {
-//        items[position].name = name
-//        items[position].description = description
-//        items[position].prix = prix
-//        items[position].categorie = cat
-        var item = Item(name,description,prix,cat,1)
-        val itemDao: ItemDao? = ItemRoomDB.getDatabase(context)?.ItemDao()
-        thread { itemDao?.updateItem(item) }
-        //itemDao?.updateItem(items[position])
-    }
-
     fun setItems(lst_items: List<Item>) {
         items = lst_items
         notifyDataSetChanged()

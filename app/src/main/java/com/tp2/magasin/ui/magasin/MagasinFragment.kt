@@ -85,6 +85,7 @@ class MagasinFragment : Fragment() {
                         item?.let {
                             val dialog = EditItemDialogFragment(false, position).apply {
                                 arguments = bundleOf(
+                                    "id" to it.id,
                                     "name" to it.name,
                                     "description" to it.description,
                                     "prix" to it.prix

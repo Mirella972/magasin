@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "item_table")
-class Item    // Accesseurs et Mutateurs
+class Item
     (
     @field:ColumnInfo(name = "name_col") var name: String,
     @field:ColumnInfo(name = "description_col") var description: String,

@@ -11,12 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-/*
-Objet BD
-    abstract, ce n'est pas une classe d'implémentation
-    l'implémentation est fournie par le room
- */
-// on peut lister les entités si il y a plusieurs tables...
 @Database(entities = [Item::class], version = 1)
 abstract class ItemRoomDB : RoomDatabase() {
     // DAO
